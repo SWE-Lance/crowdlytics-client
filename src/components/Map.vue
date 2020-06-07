@@ -81,16 +81,24 @@
       setInterval(async () => {
         this.users = []
         const res = await fetch('http://localhost:4567/api/store/list')
-        const body = JSON.parse(await res.body)
-        for(const s in body) {
-          this.users.push({
-            coords: [s.latitude, s.longitude],
-            store: {
-              name: s.store_name,
-              max: s.max,
-              count: s.count
-            }
-          })
+        const body = await res.json()
+
+        for(const x in body) {
+          if (x !== undefined && x !== 0) {
+            console.log("HI: " + s);
+            const s = body[x];
+            this.users.push({
+              coords: [s.latitude, s.longitude],
+              store: {
+                name: s.store_name,
+                max: s.max,
+                count: s.count
+              }
+            })
+
+          }
+
+
         }
       }, 5000)
     }
